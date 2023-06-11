@@ -1,9 +1,9 @@
-name: ST-BoilerPlate # TODO: 수정
-main: net.starly.boilerplate.BoilerPlateMain # TODO: 수정
+name: ST-AntiMacro # TODO: 수정
+main: net.starly.antimacro.AntiMacroMain # TODO: 수정
 author: Starly Team
 website: http://starly.kr/
 
-description: BoilerPlate Plugin. # TODO: 수정
+description: AntiMacro Plugin. # TODO: 수정
 
 softdepend:
   - ST-Core
@@ -11,4 +11,23 @@ softdepend:
 version: 1.0
 api-version: 1.13
 
+permissions:
+  starly.antimacro.*:
+    description: wildcard permission
+    children:
+      - starly.antimacro.reload
+      - starly.antimacro.check
+      - starly.antimacro.bypass
+  starly.antimacro.reload:
+    description: reload permission
+    default: op
+  starly.antimacro.check:
+    description: check permission
+    default: op
+  starly.antimacro.bypass:
+    description: bypass permission
+    default: op
+
 commands:
+  매크로:
+    description: Macro Command

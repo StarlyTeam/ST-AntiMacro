@@ -1,15 +1,24 @@
-package net.starly.boilerplate;
+package net.starly.antimacro;
 
+import lombok.Getter;
+import net.starly.antimacro.command.MacroExecutor;
+import net.starly.antimacro.context.MessageContent;
+import net.starly.antimacro.context.MessageType;
+import net.starly.antimacro.listener.StackListener;
 import net.starly.core.bstats.Metrics;
+import org.bukkit.event.Event;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.HandlerList;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class BoilerPlateMain extends JavaPlugin {
+import java.util.logging.Level;
 
-    private static BoilerPlateMain instance;
-    public static BoilerPlateMain getInstance() {
-        return instance;
-    }
+public class AntiMacroMain extends JavaPlugin {
+
+    @Getter
+    private static AntiMacroMain instance;
 
 
     @Override
@@ -26,19 +35,21 @@ public class BoilerPlateMain extends JavaPlugin {
         /* SETUP
          ──────────────────────────────────────────────────────────────────────────────────────────────────────────────── */
         instance = this;
-        new Metrics(this, 12345); // TODO: 수정
+        //new Metrics(this, 12345); // TODO: 수정
 
         /* CONFIG
          ──────────────────────────────────────────────────────────────────────────────────────────────────────────────── */
-        // TODO: 수정
+        saveDefaultConfig();
+        MessageContent.getInstance().initialize(getConfig());
 
         /* COMMAND
          ──────────────────────────────────────────────────────────────────────────────────────────────────────────────── */
-        // TODO: 수정
+        getCommand("매크로").setExecutor(new MacroExecutor());
+        getCommand("매크로").setTabCompleter(new MacroExecutor());
 
         /* LISTENER
          ──────────────────────────────────────────────────────────────────────────────────────────────────────────────── */
-        // TODO: 수정
+        getServer().getPluginManager().registerEvents(new StackListener(), this);
     }
 
     private boolean isPluginEnabled(String name) {
